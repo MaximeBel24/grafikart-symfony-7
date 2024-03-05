@@ -10,8 +10,11 @@ use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Sequentially;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
@@ -24,7 +27,11 @@ class RecipeType extends AbstractType
                 'label' => 'Titre'
             ])
             ->add('slug', TextType::class, [
-                'required' => false
+                'required' => false,
+                'constraints' => new Sequentially([
+                    new Length(min: 4),
+                    new Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', message: 'Ceci n\'est pas un slug valide.')
+                ]) 
             ])
             ->add('content', TextareaType::class, [
                 'empty_data' => ''
