@@ -78,7 +78,6 @@ class RecipeController extends AbstractController
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function remove(Recipe $recipe, EntityManagerInterface $em){
-
         $em->remove($recipe);
         $em->flush();
         $this->addFlash('danger', 'La recette a bien été supprimée');

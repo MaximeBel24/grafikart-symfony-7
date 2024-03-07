@@ -1,0 +1,10 @@
+{% extends "admin/admin.html.twig" %}
+
+{% block title "Catégorie : " ~ category.name %}
+    
+{% block body %}
+    <h1>{{ category.name }}</h1>
+
+
+    <a href="{{ path('admin.category.edit', {id: category.id}) }}" class="btn btn-warning">Modifier la catégorie</a>
+{% endblock body %}

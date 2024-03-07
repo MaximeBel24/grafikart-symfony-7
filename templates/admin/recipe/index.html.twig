@@ -7,6 +7,8 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Créer le :</th>
+                <th>Mis à jour le :</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -16,6 +18,8 @@
                 <td>
                     {{ recipe.title }}
                 </td>
+                <td>{{ recipe.createdAt | date("d/m/Y") }}</td>
+                <td>{{ recipe.updatedAt | date("d/m/Y") }} </td>
                 <td>
                     <div class="d-flex gap-1">
                         <a href="{{ path('admin.recipe.show', {id: recipe.id, slug: recipe.slug}) }}" class="btn btn-info btn-sm">Voir</a>

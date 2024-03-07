@@ -7,6 +7,8 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Créer le :</th>
+                <th>Mis à jour le :</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -14,16 +16,18 @@
         {% for category in categories %}
             <tr>
                 <td>
-
+                    {{ category.name }}
                 </td>
+                <td>{{ category.createdAt | date("d/m/Y") }}</td>
+                <td>{{ category.updatedAt | date("d/m/Y") }} </td>
                 <td>
                     <div class="d-flex gap-1">
-{#                        <a href="{{ path('admin.recipe.show', {id: recipe.id, slug: recipe.slug}) }}" class="btn btn-info btn-sm">Voir</a>
-                        <a href="{{ path('admin.recipe.edit', {id: recipe.id}) }}" class="btn btn-warning btn-sm">Editer</a>
-                        <form action="{{ path('admin.recipe.delete', {id: recipe.id}) }}" method="post">
+                        <a href="{{ path('admin.category.show', {id: category.id, slug: category.slug}) }}" class="btn btn-info btn-sm">Voir</a>
+                        <a href="{{ path('admin.category.edit', {id: category.id}) }}" class="btn btn-warning btn-sm">Editer</a>
+                        <form action="{{ path('admin.category.delete', {id: category.id}) }}" method="post">
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
-                        </form> #}
+                        </form>
                     </div>                                       
                 </td>
             </tr> 
@@ -31,5 +35,5 @@
     </table>
         </tbody>
 
-    <a href="{{ path('admin.recipe.create') }}" class="btn btn-primary">Créer une catégorie</a>
+    <a href="{{ path('admin.category.create') }}" class="btn btn-primary">Créer une catégorie</a>
 {% endblock %}

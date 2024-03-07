@@ -1,0 +1,17 @@
+{% extends "admin/admin.html.twig" %}
+
+{% block title "Ajout de catégorie "%}
+    
+{% block body %}
+    <h1>Créer une nouvelle catégorie</h1>
+
+    {{ form_start(form) }}
+
+    <div class="d-flex">
+        {{ form_row(form.name) }}
+        {{ form_row(form.slug) }}
+
+    </div>
+    {{ form_end(form) }}
+
+{% endblock body %}

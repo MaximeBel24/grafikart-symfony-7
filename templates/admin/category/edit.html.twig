@@ -1,0 +1,17 @@
+{% extends "admin/admin.html.twig" %}
+
+{% block title "Catégorie : " ~ category.name %}
+    
+{% block body %}
+    <h1>{{ category.name }}</h1>
+
+    {{ form_start(form) }}
+
+    <div class="d-flex">
+        {{ form_row(form.name) }}
+        {{ form_row(form.slug) }}
+
+    </div>
+    {{ form_end(form) }}
+
+{% endblock body %}

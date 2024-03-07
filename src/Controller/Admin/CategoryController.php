@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route("/admin/categories", name: 'admin.category.')]
@@ -44,11 +45,34 @@ class CategoryController extends AbstractController
             
             $em->persist($category);
             $em->flush();
-            $this->addFlash('success', 'La recette a bien été créée');
+            $this->addFlash('success', 'La catégorie a bien été créée');
             return $this->redirectToRoute('admin.category.index');
         }
         return $this->render('admin/category/create.html.twig',[
             'form' => $form
         ]);
+    }
+
+    #[Route('/{id}', name: 'edit', methods: ['GET', 'POST'], requirements: ['id' => Requirement::DIGITS])]
+    public function edit(Category $category, Request $request, EntityManagerInterface $em) {
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            $em->flush();
+            $this->addFlash('success', 'La catégorie a bien été modifiée.');
+            return $this->redirectToRoute('admin.category.index');
+        }
+        return $this->render('admin/category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
+    public function remove(Category $category, EntityManagerInterface $em){
+        $em->remove($category);
+        $em->flush();
+        $this->addFlash('danger', 'La catégorie a bien été supprimée');
+        return $this->redirectToRoute('admin.category.index');
     }
 }

@@ -3,15 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Event\PostSubmitEvent;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Sequentially;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CategoryType extends AbstractType
 {
@@ -29,7 +32,12 @@ class CategoryType extends AbstractType
                     new Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', message: 'Ceci n\'est pas un slug valide.')
                 ]) 
             ])
-        ;
+            ->add('save', SubmitType::class, [
+                'label' => 'Envoyer'
+            ])
+            ->addEventListener(FormEvents::PRE_SUBMIT, $this->autoSlug(...))
+            ->addEventListener(FormEvents::POST_SUBMIT, $this->attachTimestamps(...))
+            ;
     }
 
 
@@ -40,6 +48,19 @@ class CategoryType extends AbstractType
             $slugger = new AsciiSlugger();
             $data['slug'] = strtolower($slugger->slug($data['name']));
             $event->setData($data);
+        }
+    }
+
+    public function attachTimestamps(PostSubmitEvent $event): void
+    {
+        $data = $event -> getData();
+        if (!($data instanceof Category)) {
+            return;
+        }
+
+        $data->setUpdatedAt(new \DateTimeImmutable());
+        if(!$data->getId()) {
+            $data->setCreatedAt(new \DateTimeImmutable());
         }
     }
 
