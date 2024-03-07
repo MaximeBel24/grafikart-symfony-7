@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends "admin/admin.html.twig" %}
 
 {% block title "Recette : " ~ recipe.title %}
     
@@ -7,5 +7,5 @@
 
     <p>{{ recipe.content | nl2br }}</p>
 
-    <a href="{{ path('recipe.edit', {id: recipe.id}) }}">Modifier la recette</a>
+    <a href="{{ path('admin.recipe.edit', {id: recipe.id}) }}">Modifier la recette</a>
 {% endblock body %}
