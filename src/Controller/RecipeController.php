@@ -9,10 +9,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeController extends AbstractController
 {
+//    #[Route('/demo')]
+ //   public function demo(ValidatorInterface $validator)
+//    {
+ //       $recipe = new Recipe();
+ //       $errors = $validator->validate($recipe);
+ //       dd((string)$errors);
+ //   }
+
     #[Route('/recettes', name: 'recipe.index')]
     public function index(Request $request, RecipeRepository $repository, EntityManagerInterface $em): Response
     {

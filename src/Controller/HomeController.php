@@ -16,6 +16,7 @@ class HomeController extends AbstractController
     #[Route("/", name: "home")]
     function index (Request $request, RecipeRepository $repository, EntityManagerInterface $em): Response
     {
+
         $recipes = $repository->findWithDurationLowerThan(40);
 
         //Met à jour le titre de la recette 0
