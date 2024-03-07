@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
-use DateTimeImmutable;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Event\PreSubmitEvent;
@@ -17,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Sequentially;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class RecipeType extends AbstractType
 {
@@ -24,7 +24,8 @@ class RecipeType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,[
-                'label' => 'Titre'
+                'label' => 'Titre',
+                'empty_data' => ''
             ])
             ->add('slug', TextType::class, [
                 'required' => false,
@@ -34,9 +35,12 @@ class RecipeType extends AbstractType
                 ]) 
             ])
             ->add('content', TextareaType::class, [
-                'empty_data' => ''
+                'empty_data' => '',
+                'label' => 'Contenu'
             ])
-            ->add('duration')
+            ->add('duration', IntegerType::class, [
+                'label' => 'Durée'
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer'
             ])
@@ -72,6 +76,7 @@ class RecipeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Recipe::class,
+            'validation_groups' => ['Default', 'Extra']
         ]);
     }
 }

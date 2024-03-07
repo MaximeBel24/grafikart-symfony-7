@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Validator\BanWord;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\RecipeRepository;
@@ -19,16 +20,18 @@ class Recipe
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\Length(min: 4)]
-    #[BanWord()]
+    #[Assert\Length(min: 4, groups: ['Extra'])]
+    #[BanWord(groups: ['Extra'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Length(min: 4)]
     #[Assert\Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', message: 'Ceci n\'est pas un slug valide.')]
+    #[BanWord()]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[BanWord()]
     private ?string $content = null;
 
     #[ORM\Column]
