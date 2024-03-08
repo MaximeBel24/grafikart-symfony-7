@@ -3,12 +3,5 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<h2>Recettes de moins de 40 minutes</h2>
-<ul>
-    {% for recipe in recipes %}
-        <li>
-            <a href="{{ path('admin.recipe.show', {id: recipe.id, slug: recipe.slug}) }}">{{ recipe.title }}</a>
-        </li> 
-    {% endfor %}        
-</ul>
+
 {% endblock %}

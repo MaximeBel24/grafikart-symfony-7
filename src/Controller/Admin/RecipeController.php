@@ -28,8 +28,8 @@ class RecipeController extends AbstractController
     public function index(RecipeRepository $repository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response
     {
 
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $recipes = $repository->findAll();
-
         return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
