@@ -21,8 +21,8 @@
                     {{ recipe.title }}
                 </td>
                 <td>{{ recipe.category.name }}</td>
-                <td>{{ recipe.createdAt | date("d/m/Y \\à\\ H:i:s") }}</td>
-                <td>{{ recipe.updatedAt | date("d/m/Y \\à\\ H:i:s") }} </td>
+                <td>{{ recipe.createdAt | date("d/m/Y \\à\\ H:i:s", "Europe/Paris") }}</td>
+                <td>{{ recipe.updatedAt | date("d/m/Y \\à\\ H:i:s", "Europe/Paris") }} </td>
                 <td>
                     <div class="d-flex gap-1">
                         <a href="{{ path('admin.recipe.show', {id: recipe.id, slug: recipe.slug}) }}" class="btn btn-info btn-sm">Voir</a>

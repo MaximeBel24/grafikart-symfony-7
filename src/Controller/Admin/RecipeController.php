@@ -29,7 +29,7 @@ class RecipeController extends AbstractController
     {
 
         $recipes = $repository->findAll();
-        
+
         return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
@@ -53,7 +53,7 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            
+     
             $em->persist($recipe);
             $em->flush();
             $this->addFlash('success', 'La recette a bien été créée');
@@ -69,6 +69,7 @@ class RecipeController extends AbstractController
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){
+
             $em->flush();
             $this->addFlash('success', 'La recette a bien été modifiée.');
             return $this->redirectToRoute('admin.recipe.index');

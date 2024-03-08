@@ -2,21 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
 use App\Entity\Recipe;
+use App\Entity\Category;
 use App\Form\FormListenerFactory;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\Sequentially;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class RecipeType extends AbstractType
 {
@@ -37,6 +39,7 @@ class RecipeType extends AbstractType
                     new Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', message: 'Ceci n\'est pas un slug valide.')
                 ]) 
             ])
+            ->add('thumbnailFile', FileType::class)
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name'
