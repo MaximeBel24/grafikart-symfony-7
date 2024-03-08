@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin.html.twig' %}
 
 {% block title "Toutes les catégories" %}
 
@@ -9,7 +9,7 @@
                 <th>Titre</th>
                 <th>Créer le :</th>
                 <th>Mis à jour le :</th>
-                <th>Actions</th>
+                <th style="width: 220px;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +31,7 @@
                     </div>                                       
                 </td>
             </tr> 
-        {% endfor %}        
+        {% endfor %}   
     </table>
         </tbody>
 

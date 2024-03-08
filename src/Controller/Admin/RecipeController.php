@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Requirement\Requirement;
 class RecipeController extends AbstractController
 {
 //    #[Route('/demo')]
- //   public function demo(ValidatorInterface $validator)
+//    public function demo(ValidatorInterface $validator)
 //    {
  //       $recipe = new Recipe();
  //       $errors = $validator->validate($recipe);
