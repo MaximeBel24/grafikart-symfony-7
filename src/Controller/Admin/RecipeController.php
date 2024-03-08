@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
 use App\Form\RecipeType;
+use App\Repository\CategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,9 +25,11 @@ class RecipeController extends AbstractController
  //   }
 
     #[Route('/', name: 'index')]
-    public function index(RecipeRepository $repository): Response
+    public function index(RecipeRepository $repository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response
     {
+
         $recipes = $repository->findAll();
+        
         return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes
         ]);
@@ -80,7 +83,7 @@ class RecipeController extends AbstractController
     public function remove(Recipe $recipe, EntityManagerInterface $em){
         $em->remove($recipe);
         $em->flush();
-        $this->addFlash('danger', 'La recette a bien été supprimée');
+        $this->addFlash('danger', 'La recette a bien été supprimée.');
         return $this->redirectToRoute('admin.recipe.index');
     }
 }

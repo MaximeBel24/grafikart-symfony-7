@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Recipe;
 use App\Entity\Category;
 use App\Form\FormListenerFactory;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,6 +34,13 @@ class CategoryType extends AbstractType
                     new Regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/', message: 'Ceci n\'est pas un slug valide.')
                 ]) 
             ])
+//            ->add('recipes', EntityType::class, [
+//                'class' => Recipe::class,
+//                'choice_label' => 'title',
+//                'multiple' => true,
+//                'expanded' => true,
+ //               'by_reference' => false
+//            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer'
             ])
