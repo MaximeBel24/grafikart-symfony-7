@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Requirement\Requirement;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route("/admin/recettes", name: 'admin.recipe.')]
+#[IsGranted('ROLE_ADMIN')]
 class RecipeController extends AbstractController
 {
 //    #[Route('/demo')]
@@ -25,7 +27,7 @@ class RecipeController extends AbstractController
  //   }
 
     #[Route('/', name: 'index')]
-    public function index(RecipeRepository $repository, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response
+    public function index(RecipeRepository $repository): Response
     {
 
         $this->denyAccessUnlessGranted('ROLE_USER');
@@ -79,7 +81,7 @@ class RecipeController extends AbstractController
             'form' => $form
         ]);
     }
-
+    
     #[Route('/{id}', name: 'delete', methods: ['DELETE'], requirements: ['id' => Requirement::DIGITS])]
     public function remove(Recipe $recipe, EntityManagerInterface $em){
         $em->remove($recipe);

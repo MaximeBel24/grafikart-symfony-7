@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240308092553 extends AbstractMigration
+final class Version20240312165639 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,17 +20,13 @@ final class Version20240308092553 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE recipe ADD category_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE recipe ADD CONSTRAINT FK_DA88B13712469DE2 FOREIGN KEY (category_id) REFERENCES category (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('CREATE INDEX IDX_DA88B13712469DE2 ON recipe (category_id)');
+        $this->addSql('ALTER TABLE "user" ADD is_verified BOOLEAN NOT NULL');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('ALTER TABLE recipe DROP CONSTRAINT FK_DA88B13712469DE2');
-        $this->addSql('DROP INDEX IDX_DA88B13712469DE2');
-        $this->addSql('ALTER TABLE recipe DROP category_id');
+        $this->addSql('ALTER TABLE "user" DROP is_verified');
     }
 }
