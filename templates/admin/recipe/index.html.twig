@@ -4,10 +4,12 @@
 
 {% block body %}
     <h1>Toutes les recettes</h1>
+    <a href="{{ path('admin.recipe.create') }}" class="btn btn-primary">Créer une recette</a>
     <table class="table">
         <thead>
             <tr>
-                <th>Titre</th>
+                <th>{{ knp_pagination_sortable(recipes, 'ID', 'r.id') }} </th>
+                <th>{{ knp_pagination_sortable(recipes, 'Titre', 'r.title') }}</th>
                 <th>Catégorie</th>
                 <th>Créer le :</th>
                 <th>Mis à jour le :</th>
@@ -17,6 +19,9 @@
         <tbody>
         {% for recipe in recipes %}
             <tr>
+                <td>
+                    {{ recipe.id }}
+                </td>
                 <td>
                     {{ recipe.title }}
                 </td>
@@ -35,8 +40,20 @@
                 </td>
             </tr> 
         {% endfor %}        
-    </table>
         </tbody>
+    </table>
 
-    <a href="{{ path('admin.recipe.create') }}" class="btn btn-primary">Créer une recette</a>
+    {{ knp_pagination_render(recipes) }}
+
+    {# <div class="d-flex">
+        {% if page > 1 %}
+            <a href="{{ path('admin.recipe.index', {page: page - 1}) }}" class="btn btn-secondary">Page précédente</a>
+        {% endif %}
+        {% if page < maxPage %}
+            <a href="{{ path('admin.recipe.index', {page: page + 1}) }}" class="btn btn-secondary">Page suivante</a>
+        {% endif %}
+    </div> #}
+        
+
+    
 {% endblock body %}

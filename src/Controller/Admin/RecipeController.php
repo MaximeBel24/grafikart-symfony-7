@@ -27,13 +27,20 @@ class RecipeController extends AbstractController
  //   }
 
     #[Route('/', name: 'index')]
-    public function index(RecipeRepository $repository): Response
+    public function index(RecipeRepository $repository, Request $request): Response
     {
 
-        $this->denyAccessUnlessGranted('ROLE_USER');
-        $recipes = $repository->findAll();
+        // $this->denyAccessUnlessGranted('ROLE_USER');
+        $page = $request->query->getInt('page', 1);
+        $limit = 20;
+        $recipes = $repository->paginateRecipes($page, $limit);
+        $recipes = $repository->paginateRecipes($page, $limit);
+        // $maxPage = ceil($recipes->count() / $limit);
+        $maxPage = ceil($recipes->getTotalItemCount() / $limit);
         return $this->render('admin/recipe/index.html.twig', [
-            'recipes' => $recipes
+            'recipes' => $recipes,
+            // 'maxPage' => $maxPage,
+            // 'page' => $page
         ]);
     }
 

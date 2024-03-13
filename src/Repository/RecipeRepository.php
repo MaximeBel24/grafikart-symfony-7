@@ -3,8 +3,12 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Recipe>
@@ -16,9 +20,30 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class RecipeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private PaginatorInterface $paginator)
     {
         parent::__construct($registry, Recipe::class);
+    }
+
+    public function paginateRecipes(int $page, $limit): PaginationInterface //: Paginator
+    {
+        return $this->paginator->paginate(
+            $this->createQueryBuilder('r')->leftJoin('r.category', 'c')->select('r', 'c'),
+            $page,
+            $limit,
+            [
+                'distinct' => false,
+                'sortFieldAllowList' => ['r.id', 'r.title']
+            ]
+        );
+        // return new Paginator($this
+        //     ->createQueryBuilder('r')
+        //     ->setFirstResult(($page - 1) * $limit)
+        //     ->setMaxResults($limit)
+        //     ->getQuery()
+        //     ->setHint(Paginator::HINT_ENABLE_DISTINCT,false),
+        //     false
+        // );
     }
 
     public function findTotalDuration()
