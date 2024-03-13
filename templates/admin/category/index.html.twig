@@ -7,6 +7,7 @@
         <thead>
             <tr>
                 <th>Titre</th>
+                <th>Recettes</th>
                 <th>Créer le :</th>
                 <th>Mis à jour le :</th>
                 <th style="width: 220px;">Actions</th>
@@ -17,6 +18,9 @@
             <tr>
                 <td>
                     {{ category.name }}
+                </td>
+                <td>
+                    {{ category.count }}
                 </td>
                 <td>{{ category.createdAt | date("d/m/Y \\à\\ H:i:s", "Europe/Paris") }}</td>
                 <td>{{ category.updatedAt | date("d/m/Y \\à\\ H:i:s", "Europe/Paris") }} </td>
