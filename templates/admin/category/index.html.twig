@@ -3,6 +3,8 @@
 {% block title "Toutes les catégories" %}
 
 {% block body %}
+    <h1>Toutes les catégories</h1>
+    <a href="{{ path('admin.category.create') }}" class="btn btn-primary">Créer une catégorie</a>
         <table class="table">
         <thead>
             <tr>
@@ -39,5 +41,4 @@
     </table>
         </tbody>
 
-    <a href="{{ path('admin.category.create') }}" class="btn btn-primary">Créer une catégorie</a>
 {% endblock %}
